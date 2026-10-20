@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog - My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>My Blog</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="create-blog.html">Create Blog</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Create a New Blog</h2>
+
+        <form id="blogForm">
+            <p>
+                <input type="text" id="blogTitle"
+                    placeholder="Blog Title" required>
+            </p>
+
+            <p>
+                <textarea id="blogContent"
+                    placeholder="Write your blog here..."
+                    rows="6" required></textarea>
+            </p>
+
+            <button type="submit">Publish Blog</button>
+        </form>
+
+        <p id="message"></p>
+    </main>
+
+    <script>
+        const blogForm = document.getElementById("blogForm");
+        const message = document.getElementById("message");
+
+        blogForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById("blogTitle").value.trim();
+            const content = document.getElementById("blogContent").value.trim();
+
+            if (!title || !content) {
+                message.textContent = "Please fill in all fields.";
+                return;
+            }
+
+            const blogs = JSON.parse(
+                localStorage.getItem("myBlogs") || "[]"
+            );
+
+            blogs.push({
+                title: title,
+                content: content,
+                date: new Date().toLocaleDateString()
+            });
+
+            localStorage.setItem("myBlogs", JSON.stringify(blogs));
+
+            message.textContent = "Blog published successfully!";
+            message.style.color = "green";
+
+            blogForm.reset();
+        });
+    </script>
+
+</body>
+</html>

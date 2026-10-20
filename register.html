@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>My Blog</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Create Your Account</h2>
+        <p>Join My Blog and start sharing your ideas!</p>
+
+        <form id="registerForm">
+            <p>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Full Name"
+                    required
+                >
+            </p>
+
+            <p>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email Address"
+                    required
+                >
+            </p>
+
+            <p>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create Password"
+                    minlength="6"
+                    required
+                >
+            </p>
+
+            <p>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    minlength="6"
+                    required
+                >
+            </p>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p id="message"></p>
+
+        <p>
+            Already have an account?
+            <a href="login.html">Login here</a>
+        </p>
+    </main>
+
+    <script>
+        const registerForm = document.getElementById("registerForm");
+        const message = document.getElementById("message");
+
+        registerForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                message.textContent = "Passwords do not match!";
+                message.style.color = "red";
+                return;
+            }
+
+            const user = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            localStorage.setItem("myBlogUser", JSON.stringify(user));
+
+            message.textContent =
+                "Registration successful! Please login.";
+            message.style.color = "green";
+
+            registerForm.reset();
+        });
+    </script>
+
+</body>
+</html>
